@@ -3,3 +3,4 @@ djangorestframework
 django-cors-headers
 web3
 python-dotenv
+Pillow

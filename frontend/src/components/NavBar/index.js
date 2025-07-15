@@ -1,9 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
 import Web3 from "web3";
+import { useCart } from "@/contexts/CartContext";
 
 const NavBar = () => {
   const [account, setAccount] = useState(null);
+  const { getCartItemCount } = useCart();
 
   const connectWallet = async () => {
     if (window.ethereum) {
@@ -21,6 +23,8 @@ const NavBar = () => {
     }
   };
 
+  const cartItemCount = getCartItemCount();
+
   return (
     <nav className="bg-gray-800 p-4">
       <div className="container mx-auto flex justify-between items-center">
@@ -31,8 +35,16 @@ const NavBar = () => {
           <a href="/" className="text-gray-300 hover:text-white">
             Home
           </a>
-          <a href="/cart" className="text-gray-300 hover:text-white">
+          <a href="/orders" className="text-gray-300 hover:text-white">
+            Orders
+          </a>
+          <a href="/cart" className="text-gray-300 hover:text-white relative">
             Cart
+            {cartItemCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">
+                {cartItemCount}
+              </span>
+            )}
           </a>
         </div>
         <button

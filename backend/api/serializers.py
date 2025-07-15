@@ -2,9 +2,11 @@ from rest_framework import serializers
 from .models import Product, Order
 
 class ProductSerializer(serializers.ModelSerializer):
+    image_path = serializers.ReadOnlyField()
+    
     class Meta:
         model = Product
-        fields = '__all__'
+        fields = ['id', 'name', 'description', 'price', 'image', 'image_url', 'image_path']
 
 class OrderSerializer(serializers.ModelSerializer):
     product = ProductSerializer(read_only=True)
