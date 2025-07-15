@@ -1,6 +1,6 @@
 {
   "EcomercePayment": {
-    "address": "0x2d5C4eaa27582Fa8Ea29f3985d7dc8F941cCFC27",
+    "address": "0x8a1818522Fdde9e7528AD505f885e8bd96C5CE51",
     "abi": [
       {
         "type": "constructor",
@@ -597,7 +597,7 @@
     ]
   },
   "MockERC20": {
-    "address": "0x47Ba7a24189cD315768E2213588743aE176Bf371",
+    "address": "0xf2EFb1a4B21ab4e8a5a42A8FD6C082E4FCD9A540",
     "abi": [
       {
         "type": "constructor",
