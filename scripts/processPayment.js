@@ -45,12 +45,23 @@ async function main() {
         await approveTx.wait();
         console.log("Approval successful.");
 
+        // Log balances before payment
+        const buyerBalanceBefore = await MockERC20.balanceOf(buyer.address);
+        console.log(`Buyer OPM balance before payment: ${ethers.formatEther(buyerBalanceBefore)}`);
+
         console.log("Processing token payment...");
         const paymentTx = await EcomercePayment.connect(buyer).processTokenPayment(orderId);
         await paymentTx.wait();
 
         console.log(`Payment for order ${orderId} processed successfully.`);
         console.log("Transaction hash:", paymentTx.hash);
+
+        // Log balances after payment
+        const buyerBalanceAfter = await MockERC20.balanceOf(buyer.address);
+        const contractBalance = await MockERC20.balanceOf(EcomercePayment.target);
+        console.log(`Buyer OPM balance after payment: ${ethers.formatEther(buyerBalanceAfter)}`);
+        console.log(`Contract OPM balance after payment: ${ethers.formatEther(contractBalance)}`);
+
 
     } catch (error) {
         console.error("An error occurred while processing the payment:");
