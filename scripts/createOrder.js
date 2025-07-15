@@ -1,27 +1,24 @@
 const { ethers } = require("hardhat");
-const fs = require("fs");
-const path = require("path");
+const { getContracts } = require("./utils");
 
 async function main() {
-    const [owner, buyer] = await ethers.getSigners();
-    const contractInfoPath = path.join(__dirname, "contract-info.json");
-    const contractInfo = JSON.parse(fs.readFileSync(contractInfoPath, "utf8"));
+    const { EcomercePayment, contractInfo } = await getContracts();
+    const [_, buyer] = await ethers.getSigners(); // Use the second account as the buyer
 
-    const ecomercePaymentAddress = contractInfo.EcomercePayment.address;
-    const ecomercePaymentAbi = contractInfo.EcomercePayment.abi;
-    const mockERC20Address = contractInfo.MockERC20.address;
-
-    const ecomercePayment = new ethers.Contract(ecomercePaymentAddress, ecomercePaymentAbi, owner);
-    
+    const tokenAddress = contractInfo.MockERC20.address;
     const amount = ethers.parseEther("5"); // 5 OPM
 
     console.log(`Creating a token order for ${ethers.formatEther(amount)} OPM...`);
 
-    const tx = await ecomercePayment.connect(buyer).createOrder(amount, mockERC20Address);
+    const tx = await EcomercePayment.connect(buyer).createOrder(amount, tokenAddress);
     const receipt = await tx.wait();
+
+    const createOrderLog = receipt.logs.find(log => log.eventName === 'PaymentPending');
+    if (!createOrderLog) {
+        throw new Error("PaymentPending event not found");
+    }
     
-    // The orderId is now the first argument of the PaymentPending event
-    const orderId = receipt.logs[0].args[0];
+    const orderId = createOrderLog.args[0];
 
     console.log(`Order created with ID: ${orderId}`);
     console.log("Transaction hash:", tx.hash);

@@ -3,8 +3,8 @@ const fs = require("fs");
 const path = require("path");
 
 async function main() {
-    const [owner] = await ethers.getSigners();
-    console.log("Deploying contracts with the account:", owner.address);
+    const [deployer] = await ethers.getSigners();
+    console.log("Deploying contracts with the account:", deployer.address);
 
     // Deploy MockERC20 token
     const MockERC20 = await ethers.getContractFactory("MockERC20");
@@ -20,7 +20,7 @@ async function main() {
 
     // Add the mock token as a supported token in the payment contract
     console.log("Adding MockERC20 as a supported token...");
-    await ecomercePayment.connect(owner).addSupportedToken(mockERC20.target);
+    await ecomercePayment.connect(deployer).addSupportedToken(mockERC20.target);
     console.log("Supported token added.");
 
     // Save contract info for backend
