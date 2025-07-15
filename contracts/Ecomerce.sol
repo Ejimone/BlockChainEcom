@@ -44,7 +44,7 @@ contract EcomercePayment is ReentrancyGuard {
         uint256 amount;
         PaymentStatus status;
         uint256 timestamp;
-        address paymentToken; // ETH address is 0x0
+        address paymentToken;
         bool isTokenPayment;
     }
 

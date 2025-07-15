@@ -354,19 +354,3 @@ describe("EcomercePayment", function () {
         });
     });
 });
-
-// Mock ERC20 contract for testing purposes
-// This will be deployed by Hardhat for testing token payments
-// Save this as contracts/MockERC20.sol
-/*
-// SPDX-License-Identifier: MIT
-pragma solidity ^0.8.0;
-
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-
-contract MockERC20 is ERC20 {
-    constructor(string memory name, string memory symbol, uint256 initialSupply) ERC20(name, symbol) {
-        _mint(msg.sender, initialSupply);
-    }
-}
-*/
