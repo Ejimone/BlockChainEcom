@@ -376,3 +376,18 @@ Frontend: Add a chat widget to send messages to /api/bot/ and display responses.
 
 Conclusion
 This documentation outlines a fully functional decentralized e-commerce platform. Follow these steps to set up and integrate Django, React.js, Web3.js, and Hardhat, with an AI bot for enhanced user interaction.
+
+
+
+
+
+
+some endpoints:
+GET  /api/products/                 - List products
+POST /api/orders/                   - Create order
+POST /api/orders/{id}/payment/      - Process payment
+GET  /api/orders/{id}/status/       - Get order status
+GET  /api/orders/list/              - List all orders
+POST /api/orders/{id}/cancel/       - Cancel order
+POST /api/orders/{id}/refund/       - Initiate refund
+GET  /api/blockchain/info/          - Get blockchain info
