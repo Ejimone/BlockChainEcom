@@ -15,9 +15,20 @@ async function main() {
     const ecomercePayment = new ethers.Contract(ecomercePaymentAddress, ecomercePaymentAbi, owner);
     const mockERC20 = new ethers.Contract(mockERC20Address, mockERC20Abi, owner);
 
-    const orderId = 1; // Change this to the ID of the order you want to process
+    // Get orderId from environment variable
+    const orderId = process.env.ORDER_ID;
+    if (!orderId) {
+        console.error("Please provide an order ID by running the 'process-payment' task.");
+        process.exit(1);
+    }
+
+    console.log(`Fetching details for order ${orderId}...`);
 
     const order = await ecomercePayment.getOrder(orderId);
+    if (order.buyer === ethers.ZeroAddress) {
+        console.error(`Order with ID ${orderId} not found.`);
+        process.exit(1);
+    }
     const amount = order.amount;
 
     console.log(`Processing payment for order ${orderId} with amount ${ethers.formatEther(amount)} OPM...`);
