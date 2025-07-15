@@ -16,7 +16,7 @@ describe("EcomercePayment", function () {
 
         // Deploy Mock ERC20 Token
         const MockERC20 = await ethers.getContractFactory("MockERC20");
-        mockERC20 = await MockERC20.deploy("MockToken", "MTK", ethers.parseEther("1000"));
+        mockERC20 = await MockERC20.deploy(ethers.parseEther("1000"));
         await mockERC20.waitForDeployment();
 
         EcomercePayment = await ethers.getContractFactory("EcomercePayment");
